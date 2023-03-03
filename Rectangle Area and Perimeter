@@ -1,0 +1,58 @@
+# Program File: mips1.asm
+# Author: Mila Kuang
+# Purpose: Compute the perimeter and area of a rectangle
+
+.text
+main:
+	#Prompt for the width
+	li $v0, 4 # The 4 gets loaded into $v0 to indicate a print string
+	la $a0, width 
+	syscall
+	
+	li $v0, 5 # The 5 means read integer and stores it into $v0
+	syscall # Reads it
+	move $s0, $v0 # Store the value we got which is in $v0 to $s0
+	
+	#Prompt for height
+	li $v0, 4 # The 4 gets loaded into $v0 to indicate a print string
+	la $a0, height 
+	syscall
+	
+	li $v0, 5 # The 5 means read integer and stores it into $v0
+	syscall # Reads it
+	move $s1, $v0 # Store the value we got which is in $v0 to $s0
+	
+	# Calculate the area
+	mult $s0, $s1
+	mflo $s2
+	
+	# Output the area
+	li $v0, 4
+	la $a0, area
+	syscall
+	
+	li $v0, 1
+	move $a0, $s2
+	syscall
+	
+	# Calculate the perimeter
+	add $s2, $s2, $s2
+	
+	# Output the perimeter
+	li $v0, 4
+	la $a0, perimeter
+	syscall
+	
+	li $v0, 1
+	move $a0, $s2
+	syscall
+	
+	# Exit the program
+ 	li $v0, 10
+ 	syscall
+
+.data
+width: .asciiz "Please enter the width: \n"
+height: .asciiz "Please enter the height: \n"
+area: .asciiz "\nArea: "
+perimeter: .asciiz "\nPerimeter: "
